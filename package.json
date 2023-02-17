@@ -1,0 +1,30 @@
+{
+  "name": "test-khqr-decoder",
+  "version": "1.0.0",
+  "description": "Decode KHQR for testing purpose",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "browserify main.js -o docs/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishinvin/test-khqr-decoder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ishinvin/test-khqr-decoder/issues"
+  },
+  "homepage": "https://github.com/ishinvin/test-khqr-decoder#readme",
+  "devDependencies": {
+    "browserify": "^17.0.0"
+  },
+  "dependencies": {
+    "bakong-khqr": "^1.0.13",
+    "qrcode-reader": "^1.0.4"
+  }
+}
