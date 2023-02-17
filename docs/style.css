@@ -95,7 +95,7 @@ form .content p {
     /* color: #fff; */
     font-size: 18px;
     /* background: none; */
-    background: #fff;
+    /* background: #fff; */
     border-radius: 5px;
     padding: 10px 15px;
     border: 1px solid #fff;
@@ -119,7 +119,7 @@ form .content p {
     transition: transform 0.3s ease;
 }
 
-textarea::-webkit-scrollbar {
+/* textarea::-webkit-scrollbar {
     width: 0px;
 }
 
@@ -134,7 +134,7 @@ textarea:hover::-webkit-scrollbar-track {
 textarea:hover::-webkit-scrollbar-thumb {
     background: #fff;
     border-radius: 8px;
-}
+} */
 
 .details .buttons {
     display: flex;

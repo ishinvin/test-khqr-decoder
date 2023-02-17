@@ -6,6 +6,7 @@ const wrapper = document.querySelector(".wrapper"),
     form = document.querySelector("form"),
     fileInp = form.querySelector("input"),
     infoText = form.querySelector("p"),
+    details = document.querySelector('.details'),
     qrText = document.querySelector(".qr-result"),
     khqrText = document.querySelector(".khqr"),
     closeBtn = document.querySelector(".close"),
@@ -37,8 +38,7 @@ function decodeQRcode(file) {
 
                 qrText.value = result;
                 khqrText.value = JSON.stringify(BakongKHQR.decode(result).data, undefined, 4);
-                qrText.hidden = false;
-                khqrText.hidden = false;
+                details.hidden = false;
                 form.querySelector("img").src = URL.createObjectURL(file);
                 wrapper.classList.add("active");
             };
@@ -67,9 +67,10 @@ khqrCopyBtn.addEventListener("click", () => {
 form.addEventListener("click", () => fileInp.click());
 closeBtn.addEventListener("click", () => {
     wrapper.classList.remove("active");
-    qrText.hidden = true;
-    khqrText.hidden = true;
     fileInp.value = '';
+    qrText.value = '';
+    khqrText.value = '';
+    details.hidden = true;
 });
 
 
