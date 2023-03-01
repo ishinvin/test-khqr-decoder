@@ -1,5 +1,5 @@
 const { BakongKHQR } = require("bakong-khqr");
-const QrCode = require('qrcode-reader');
+const jsQR = require("jsqr");
 
 const wrapper = document.querySelector(".wrapper"),
     form = document.querySelector("form"),
@@ -19,30 +19,32 @@ function decodeQRcode(file) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
-        // FileReader will emit the load event when the data URL is ready
-        // Access the string using result property inside the callback function
-        reader.addEventListener('load', () => {
-            // Get the data URL string
-            var qr = new QrCode();
-            qr.callback = function (err, value) {
-                if (err) {
-                    console.error(err);
+        reader.onload = (event) => {
+            const image = new Image();
+            image.src = event.target.result;
+            image.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = image.width;
+                canvas.height = image.height;
+                ctx.drawImage(image, 0, 0, image.width, image.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                if (code) {
+                    const result = code.data;
+                    infoText.innerText = result ? "Upload QR Code to Scan" : "Couldn't scan QR Code";
+
+                    qrText.value = result;
+                    khqrText.value = JSON.stringify(BakongKHQR.decode(result).data, undefined, 4);
+                    details.hidden = false;
+                    form.querySelector("img").src = URL.createObjectURL(file);
+                    wrapper.classList.add("active");
+                } else {
                     // TODO handle error
                     infoText.innerText = "Couldn't scan QR Code";
                 }
-
-                if (!(value && value.result)) return;
-                result = value.result;
-                infoText.innerText = result ? "Upload QR Code to Scan" : "Couldn't scan QR Code";
-
-                qrText.value = result;
-                khqrText.value = JSON.stringify(BakongKHQR.decode(result).data, undefined, 4);
-                details.hidden = false;
-                form.querySelector("img").src = URL.createObjectURL(file);
-                wrapper.classList.add("active");
             };
-            qr.decode(reader.result);
-        });
+        };
     }
 
 }
